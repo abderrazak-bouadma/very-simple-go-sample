@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: rainbow
 spec:
-  replicas: 1
+  replicas: 2
   template:
     metadata:
       labels:
@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: rainbow
-        image: abderrazak/rainbow:latest
+        image: abderrazak/rainbow:health
         imagePullPolicy: Always #IfNotPresent
         ports:
         - containerPort: 3000
@@ -22,13 +22,13 @@ spec:
           value: "3000"
         livenessProbe:
           httpGet:
-            path: /
+            path: /health
             port: 3000
           initialDelaySeconds: 60
           periodSeconds: 10 # default is 10s
         readinessProbe:
           httpGet:
-            path: /
+            path: /health
             port: 3000
           initialDelaySeconds: 5
 
@@ -37,7 +37,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: rainbow
+  name: rainbow-service
   labels:
     app: rainbow
     visualize: "true"
@@ -57,5 +57,5 @@ metadata:
   name: ingress-rainbow
 spec:
   backend:
-    serviceName: rainbow
+    serviceName: rainbow-service
     servicePort: 3000
