@@ -59,3 +59,11 @@ spec:
   backend:
     serviceName: rainbow-service
     servicePort: 3000
+  rules:
+    - host:
+      http:
+        paths:
+          - path: /app
+            backend:
+              serviceName: rainbow-service
+              servicePort: 3000
