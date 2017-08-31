@@ -14,7 +14,7 @@ func handleRootContext(w http.ResponseWriter, request *http.Request) {
 		"<meta charset=\"utf-8\">"+
 		"<title>A static page</title>"+
 		"<style>"+
-		"body {background-color: purple}"+
+		"body {background-color: yellowgreen}"+
 		"</style>"+
 		"</head>"+
 		"<body>"+
