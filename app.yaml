@@ -1,13 +1,13 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: rainbow
+  name: rainbow-app
 spec:
   replicas: 2
   template:
     metadata:
       labels:
-        app: rainbow
+        app: rainbow-app
         visualize: "true"
         version: v1
     spec:
@@ -17,9 +17,6 @@ spec:
         imagePullPolicy: Always #IfNotPresent
         ports:
         - containerPort: 3000
-        env:
-        - name: PORT
-          value: "3000"
         livenessProbe:
           httpGet:
             path: /health
@@ -38,16 +35,13 @@ apiVersion: v1
 kind: Service
 metadata:
   name: rainbow-service
-  labels:
-    app: rainbow
-    visualize: "true"
 spec:
   type: NodePort
-  ports:
-  - port: 3000
-    targetPort: 3000
-    protocol: TCP
-    name: http
   selector:
-    run: rainbow
+    app: rainbow-app
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+    nodePort: 30001
 
