@@ -1,0 +1,47 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: rainbow-app
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: rainbow-app
+        visualize: "true"
+        version: v1
+    spec:
+      containers:
+      - name: rainbow
+        image: abderrazak/rainbow:yellowgreen
+        imagePullPolicy: Always #IfNotPresent
+        ports:
+        - containerPort: 3000
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 60
+          periodSeconds: 10 # default is 10s
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 5
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: rainbow-service
+spec:
+  type: NodePort
+  selector:
+    app: rainbow-app
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+    nodePort: 30001
+
