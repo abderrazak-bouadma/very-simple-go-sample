@@ -1,1 +1,1 @@
-# Spinnaker demo
+# Simple go app
