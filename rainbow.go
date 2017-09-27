@@ -23,9 +23,6 @@ func handleRootContext(w http.ResponseWriter, request *http.Request) {
 		"</html>")
 }
 
-<<<<<<< HEAD
-	log.Println("Listening on port 3000...")
-=======
 func handleHealthCheck(w http.ResponseWriter, request *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
@@ -35,7 +32,6 @@ func handleHealthCheck(w http.ResponseWriter, request *http.Request) {
 func main() {
 	http.HandleFunc("/", handleRootContext)
 	http.HandleFunc("/health", handleHealthCheck)
-	log.Println("Listening ....")
->>>>>>> 99db6eea9e16dbf54480ffb69b0ab402532db064
+	log.Println("Listening on port 3000...")
 	http.ListenAndServe(":3000", nil)
 }
